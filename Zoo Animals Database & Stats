@@ -1,0 +1,34 @@
+-- Create a Zoo Database
+
+CREATE TABLE animals (id INTEGER PRIMARY KEY, name TEXT, color TEXT, weight INTEGER, babies INTEGER, Lifespan INTEGER);
+
+INSERT INTO animals VALUES (1, "Elephant", "gray", 3000, 1, 50);
+INSERT INTO animals VALUES (2, "Lion", "yellow", 200, 2, 30);
+INSERT INTO animals VALUES (3, "Cat", "brown", 15, 3, 15);
+INSERT INTO animals VALUES (4, "Hippo", "brown", 2500, 1, 35);
+INSERT INTO animals VALUES (5, "Cricket", "black", 1, 20, 2);
+INSERT INTO animals VALUES (6, "Frog", "green", 4, 80, 8);
+INSERT INTO animals VALUES (7, "Hyena", "brown", 170, 2, 28);
+INSERT INTO animals VALUES (8, "Whale", "blue", 6400, 1, 49);
+INSERT INTO animals VALUES (9, "Dolphin", "blue", 349, 2, 39);
+INSERT INTO animals VALUES (10, "Turtle", "Green", 150, 76, 100);
+INSERT INTO animals VALUES (11, "Monkey", "orange", 450, 3, 69);
+INSERT INTO animals VALUES (12, "Cheetah", "brown", 300, 1, 29);
+INSERT INTO animals VALUES (13, "Panther", "purple", 490, 2, 27);
+INSERT INTO animals VALUES (14, "Fox", "red", 200, 5, 26);
+INSERT INTO animals VALUES (15, "Flamingo", "pink", 143, 5, 45);
+
+--display the database ordered by weight. 
+SELECT * FROM animals
+ORDER BY weight desc; 
+
+--what is the avg lifespan of animals that are brown? 
+SELECT AVG(lifespan) "avg brown animal"
+FROM animals
+where color='brown';
+
+--which animals have the most babies? 
+SELECT name, babies
+FROM animals
+ORDER BY babies desc
+limit 5;  
