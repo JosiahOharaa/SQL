@@ -11,19 +11,19 @@ CREATE TABLE countries(
    percent_of_world_pop    REAL
 );
 
-QUESTION: Does a higher density_per_sq_km in countries correlate with an increased likelihood of more emigrants than immigrants?
+-- QUESTION: Does a higher density_per_sq_km in countries correlate with an increased likelihood of more emigrants than immigrants?
 Query: 
   SELECT name, density_per_sq_km, net_migrants FROM countries 
     WHERE density_per_sq_km > 300 
     AND net_migrants < 1;
 
-QUESTION: Which countries have the highest population based on either their percentage of the world's population or their overall population?
+-- QUESTION: Which countries have the highest population based on either their percentage of the world's population or their overall population?
 Query:
   SELECT name, population, percent_of_world_pop FROM countries 
     WHERE population > 150000000 
     OR percent_of_world_pop > 2
 
-QUESTION: Do countries tend to exhibit older median age groups, or is there a prevalence of younger populations among countries?
+-- QUESTION: Do countries tend to exhibit older median age groups, or is there a prevalence of younger populations among countries?
 Query:
  SELECT COUNT(*) AS Number_of_Countries, 
     CASE 
@@ -35,14 +35,14 @@ Query:
   FROM countries
   GROUP BY "Median Age";
 
-QUESTION: Which countries are included in the list of the ten most populous nations and which countries make up the list of the ten least populous nations?
+-- QUESTION: Which countries are included in the list of the ten most populous nations and which countries make up the list of the ten least populous nations?
 Query:
   SELECT * FROM countries ORDER BY population desc
     LIMIT 10; 
   SELECT * FROM countries ORDER BY population asc
     LIMIT 10; 
 
-QUESTION: Is there a correlation between the area_sq_km of countries and their percentage of the world's population?
+-- QUESTION: Is there a correlation between the area_sq_km of countries and their percentage of the world's population?
 Query:
   SELECT name AS Countries, percent_of_world_pop, SUM(area_sq_km) AS total_land FROM countries
     GROUP BY "percent_of_world_pop"
