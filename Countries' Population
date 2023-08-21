@@ -11,44 +11,6 @@ CREATE TABLE countries(
    percent_of_world_pop    REAL
 );
 
--- QUESTION: Does a higher density_per_sq_km in countries correlate with an increased likelihood of more emigrants than immigrants?
-Query: 
-  SELECT name, density_per_sq_km, net_migrants FROM countries 
-    WHERE density_per_sq_km > 300 
-    AND net_migrants < 1;
-
--- QUESTION: Which countries have the highest population based on either their percentage of the world's population or their overall population?
-Query:
-  SELECT name, population, percent_of_world_pop FROM countries 
-    WHERE population > 150000000 
-    OR percent_of_world_pop > 2
-
--- QUESTION: Do countries tend to exhibit older median age groups, or is there a prevalence of younger populations among countries?
-Query:
- SELECT COUNT(*) AS Number_of_Countries, 
-    CASE 
-        WHEN median_age > 40 THEN "Above 40 years old"
-        WHEN median_age > 30 THEN "31-40 years old"
-        WHEN median_age > 20 THEN "21-30 years old"
-        WHEN median_age > 10 THEN "Below 21 years old" 
-  END AS "Median Age"
-  FROM countries
-  GROUP BY "Median Age";
-
--- QUESTION: Which countries are included in the list of the ten most populous nations and which countries make up the list of the ten least populous nations?
-Query:
-  SELECT * FROM countries ORDER BY population desc
-    LIMIT 10; 
-  SELECT * FROM countries ORDER BY population asc
-    LIMIT 10; 
-
--- QUESTION: Is there a correlation between the area_sq_km of countries and their percentage of the world's population?
-Query:
-  SELECT name AS Countries, percent_of_world_pop, SUM(area_sq_km) AS total_land FROM countries
-    GROUP BY "percent_of_world_pop"
-    HAVING total_land > 150;
-
-
 INSERT INTO countries(name,population,percent_one_year_change,population_change,density_per_sq_km,area_sq_km,net_migrants,fertility_rate,median_age,percent_of_world_pop) VALUES ('China',1439323776,0.39,5540090,153,9388211,-348399,1.70,38.00,18.47);
 INSERT INTO countries(name,population,percent_one_year_change,population_change,density_per_sq_km,area_sq_km,net_migrants,fertility_rate,median_age,percent_of_world_pop) VALUES ('India',1380004385,0.99,13586631,464,2973190,-532687,2.20,28.00,17.7);
 INSERT INTO countries(name,population,percent_one_year_change,population_change,density_per_sq_km,area_sq_km,net_migrants,fertility_rate,median_age,percent_of_world_pop) VALUES ('United States',331002651,0.59,1937734,36,9147420,954806,1.80,38.00,4.25);
@@ -250,3 +212,40 @@ INSERT INTO countries(name,population,percent_one_year_change,population_change,
 INSERT INTO countries(name,population,percent_one_year_change,population_change,density_per_sq_km,area_sq_km,net_migrants,fertility_rate,median_age,percent_of_world_pop) VALUES ('U.S. Virgin Islands',104425,-0.15,-153,298,350,-451,2.00,43.00,0);
 INSERT INTO countries(name,population,percent_one_year_change,population_change,density_per_sq_km,area_sq_km,net_migrants,fertility_rate,median_age,percent_of_world_pop) VALUES ('Seychelles',98347,0.62,608,214,460,-200,2.50,34.00,0);
 INSERT INTO countries(name,population,percent_one_year_change,population_change,density_per_sq_km,area_sq_km,net_migrants,fertility_rate,median_age,percent_of_world_pop) VALUES ('Antigua and Barbuda',97929,0.84,811,223,440,0,2.00,34.00,0);
+
+-- QUESTION: Does a higher density_per_sq_km in countries correlate with an increased likelihood of more emigrants than immigrants?
+Query: 
+  SELECT name, density_per_sq_km, net_migrants FROM countries 
+    WHERE density_per_sq_km > 300 
+    AND net_migrants < 1;
+
+-- QUESTION: Which countries have the highest population based on either their percentage of the world's population or their overall population?
+Query:
+  SELECT name, population, percent_of_world_pop FROM countries 
+    WHERE population > 150000000 
+    OR percent_of_world_pop > 2
+
+-- QUESTION: Do countries tend to exhibit older median age groups, or is there a prevalence of younger populations among countries?
+Query:
+ SELECT COUNT(*) AS Number_of_Countries, 
+    CASE 
+        WHEN median_age > 40 THEN "Above 40 years old"
+        WHEN median_age > 30 THEN "31-40 years old"
+        WHEN median_age > 20 THEN "21-30 years old"
+        WHEN median_age > 10 THEN "Below 21 years old" 
+  END AS "Median Age"
+  FROM countries
+  GROUP BY "Median Age";
+
+-- QUESTION: Which countries are included in the list of the ten most populous nations and which countries make up the list of the ten least populous nations?
+Query:
+  SELECT * FROM countries ORDER BY population desc
+    LIMIT 10; 
+  SELECT * FROM countries ORDER BY population asc
+    LIMIT 10; 
+
+-- QUESTION: Is there a correlation between the area_sq_km of countries and their percentage of the world's population?
+Query:
+  SELECT name AS Countries, percent_of_world_pop, SUM(area_sq_km) AS total_land FROM countries
+    GROUP BY "percent_of_world_pop"
+    HAVING total_land > 150;
