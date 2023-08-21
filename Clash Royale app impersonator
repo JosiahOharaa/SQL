@@ -1,0 +1,32 @@
+CREATE TABLE clash_royale
+(id INTEGER PRIMARY KEY, username TEXT, friends TEXT, trophies INTEGER, gems INTEGER, gold INTEGER, clan_name TEXT, player_id INTEGER, most_played_card TEXT, arena INTEGER);
+
+INSERT INTO clash_royale (username, friends, trophies, gems, gold, clan_name, player_id, most_played_card, arena)
+    VALUES ("HosiahO", "mooper", "5739", "1924", "870918", "moopers", "48-947362837", "The Log", "16"); 
+INSERT INTO clash_royale (username, friends, trophies, gems, gold, clan_name, player_id, most_played_card, arena)
+    VALUES ("mooper", "arcobeeswax", "5837", "120", "489374", "moopers", "48-382649374", "Giant Skeleton", "17");
+INSERT INTO clash_royale (username, friends, trophies, gems, gold, clan_name, player_id, most_played_card, arena)
+    VALUES ("acrobeeswax", "HosiahO", "6794", "890", "3828", "moopers", "39-294287029", "Ice Golem", "16");
+INSERT INTO clash_royale (username, friends, trophies, gems, gold, clan_name, player_id, most_played_card, arena)
+    VALUES ("Teragon", "rustymark", "5229", "35", "4938", "AwesomeSaucers", "48-948827364", "Wizard", "14");
+
+-- Clash Royale has a new feature where you can view the year a user has joined.
+ALTER TABLE clash_royale ADD year_joined INTEGER default "unknown";
+
+-- User's stats increase after winning in battle.
+UPDATE clash_royale 
+SET trophies = "6321", gold = "489983", arena = "18" 
+WHERE id = 2;
+
+UPDATE clash_royale
+SET year_joined = "2022"
+WHERE id = 4;
+
+UPDATE clash_royale
+SET most_played_card = "Princess", trophies = "5989"
+WHERE id = 1;
+
+-- id 4 has deleted their account.
+DELETE FROM clash_royale where id = 4;
+
+SELECT * FROM clash_royale;
