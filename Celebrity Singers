@@ -1,0 +1,99 @@
+CREATE TABLE singers (id INTEGER PRIMARY KEY AUTOINCREMENT, fullname TEXT, age INTEGER, birthday TEXT);
+
+INSERT INTO singers (fullname, age, birthday)
+VALUES ("Ariana Grande", "30", "June 26, 1993");
+INSERT INTO singers (fullname, age, birthday)
+VALUES ("Taylor Swift", "33", "December 13, 1989");
+INSERT INTO singers (fullname, age, birthday)
+VALUES ("Ed Sheeran", "32", "February 17, 1991");
+INSERT INTO singers (fullname, age, birthday)
+VALUES ("Beyonce", "41", "September 4, 1981");
+INSERT INTO singers (fullname, age, birthday)
+VALUES ("Drake", "36", "October 24, 1986");
+INSERT INTO singers (fullname, age, birthday)
+VALUES ("Billie Eilish", "21", "December 18, 2001");
+INSERT INTO singers (fullname, age, birthday)
+VALUES ("Rihanna", "35", "February 20, 1988");
+INSERT INTO singers (fullname, age, birthday)
+VALUES ("Justin Bieber", "29", "March 1, 1994");
+
+CREATE TABLE songs (id INTEGER PRIMARY KEY AUTOINCREMENT, person_id INTEGER, genre TEXT, most_popular_song TEXT, collaborations TEXT, number_of_albums INTEGER);
+
+INSERT INTO songs (person_id, genre, most_popular_song, collaborations, number_of_albums)
+VALUES (1, "pop", "Thank U, Next", 8, "6");
+INSERT INTO songs (person_id, genre, most_popular_song, collaborations, number_of_albums)
+VALUES (2, "pop", "Blank Space", 3, "10");
+INSERT INTO songs (person_id, genre, most_popular_song, collaborations, number_of_albums)
+VALUES (3, "pop", "Shape of You", 2, "6"); 
+INSERT INTO songs (person_id, genre, most_popular_song, collaborations, number_of_albums)
+VALUES (4, "R&B", "Break my Soul", 6, "7");  
+INSERT INTO songs (person_id, genre, most_popular_song, collaborations, number_of_albums)
+VALUES (5, "hip hop", "One Dance", 7, "7"); 
+INSERT INTO songs (person_id, genre, most_popular_song, collaborations, number_of_albums)
+VALUES (6, "alt-pop", "Bad Guy", 4, "2"); 
+INSERT INTO songs (person_id, genre, most_popular_song, collaborations, number_of_albums)
+VALUES (7, "pop", "We Found Love", 5, "8"); 
+INSERT INTO songs (person_id, genre, most_popular_song, collaborations, number_of_albums)
+VALUES (8, "pop", "Stay", 1, "6");
+
+CREATE TABLE popularity (id INTEGER PRIMARY KEY AUTOINCREMENT, networth INTEGER, followers_on_instagram INTEGER, grammys INTEGER, album_sales INTEGER);
+
+INSERT INTO popularity (networth, followers_on_instagram, grammys, album_sales)
+VALUES ("240000000", "376000000", "2", "100000000");
+INSERT INTO popularity (networth, followers_on_instagram, grammys, album_sales)
+VALUES ("600000000", "270000000", "12", "114000000"); 
+INSERT INTO popularity (networth, followers_on_instagram, grammys, album_sales)
+VALUES ("200000000", "44900000", "4", "150000000");
+INSERT INTO popularity (networth, followers_on_instagram, grammys, album_sales)
+VALUES ("500000000", "316000000", "29", "171000000");
+INSERT INTO popularity (networth, followers_on_instagram, grammys, album_sales)
+VALUES ("25000000", "141100000", "5", "170000000");
+INSERT INTO popularity (networth, followers_on_instagram, grammys, album_sales)
+VALUES ("300000000", "110000000", "7", "41500000");
+INSERT INTO popularity (networth, followers_on_instagram, grammys, album_sales)
+VALUES ("1700000000", "152000000", "9", "60000000");
+INSERT INTO popularity (networth, followers_on_instagram, grammys, album_sales)
+VALUES ("300000000", "292000000", "2", "150000000");
+
+-- Merge these two tables to display the singer alongside their corresponding song data.
+SELECT * FROM singers, songs
+    WHERE songs.person_id = singers.id;
+
+-- Which singers possess a net worth exceeding 400 million?
+SELECT singers.fullname, singers.age, popularity.networth, popularity.album_sales FROM singers
+    JOIN popularity
+    ON singers.id = popularity.id
+    WHERE popularity.networth > 400000000;
+
+-- Pair up the celebrities who joined together to create a song.
+SELECT a.fullname AS "Main Artist", b.fullname AS "Featuring"
+FROM songs
+    JOIN singers a
+    ON songs.person_id = a.id
+    JOIN singers b
+    ON songs.collaborations = b.id;
+
+-- Arrange the singers in order of their Grammy count, while analyzing their most popular song right besides the artist.
+SELECT singers.fullname, popularity.grammys, songs.most_popular_song
+    FROM singers
+    JOIN songs
+    ON singers.id = songs.person_id
+    JOIN popularity
+    ON popularity.id = songs.person_id
+ORDER BY grammys desc;
+
+-- Provide a descending list of singers based on their album sales, accompanied by the respective number of albums each artist has released.
+SELECT singers.fullname, songs.number_of_albums, popularity.album_sales
+    FROM singers
+    JOIN songs
+    ON singers.id = songs.person_id
+    JOIN popularity
+    ON popularity.id = songs.person_id
+ORDER BY album_sales desc;
+
+-- Is there a correlation between the age of the singer and their net worth?
+SELECT singers.fullname, singers.age, popularity.networth
+FROM singers
+JOIN popularity
+ON singers.id = popularity.id
+ORDER BY age desc
